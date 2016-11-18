@@ -370,7 +370,7 @@ namespace cryptonote
 
       crypto::hash tx_hash = *vhi++;
       e.tx_hash = *txhi++;
-      m_core.get_tx_outputs_gindexs(tx_hash, e.o_indexes);
+      m_core.get_tx_outputs_gindexs_string(tx_hash, e.o_indexes);
       blobdata blob = t_serializable_object_to_blob(tx);
       e.as_hex = string_tools::buff_to_hex_nodelimer(blob);
       if (req.decode_as_json)

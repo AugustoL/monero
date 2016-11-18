@@ -160,7 +160,7 @@ namespace cryptonote
       std::string tx_hash;
       std::string as_hex;
       std::string as_json;
-      std::vector<uint64_t> o_indexes;
+      std::string o_indexes;
       bool in_pool;
       uint64_t block_height;
 
@@ -168,7 +168,7 @@ namespace cryptonote
         KV_SERIALIZE(tx_hash)
         KV_SERIALIZE(as_hex)
         KV_SERIALIZE(as_json)
-        // KV_SERIALIZE(o_indexes)
+        KV_SERIALIZE(o_indexes)
         KV_SERIALIZE(in_pool)
         KV_SERIALIZE(block_height)
       END_KV_SERIALIZE_MAP()
@@ -187,12 +187,12 @@ namespace cryptonote
       std::vector<entry> txs;
       std::string status;
 
-      std::list<std::vector<uint64_t>> txs_o_indexes; //transactions indexes
+      std::list<std::string> txs_o_indexes; //transactions indexes
 
       BEGIN_KV_SERIALIZE_MAP()
         KV_SERIALIZE(txs_as_hex)
         KV_SERIALIZE(txs_as_json)
-        // KV_SERIALIZE(txs_o_indexes)
+        KV_SERIALIZE(txs_o_indexes)
         KV_SERIALIZE(txs)
         KV_SERIALIZE(missed_tx)
         KV_SERIALIZE(status)

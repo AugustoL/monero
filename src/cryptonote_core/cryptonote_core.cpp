@@ -31,6 +31,9 @@
 #include "include_base_utils.h"
 using namespace epee;
 
+#include <iterator>     // std::back_inserter
+#include <algorithm>    // std::copy
+
 #include <boost/foreach.hpp>
 #include <unordered_set>
 #include "cryptonote_core.h"
@@ -629,12 +632,12 @@ namespace cryptonote
     BOOST_FOREACH(auto& b, blocks)
     {
       coinbase_amount = get_outs_money_amount(b.miner_tx);
-      this->get_transactions(b.tx_hashes, txs, missed_txs);      
+      this->get_transactions(b.tx_hashes, txs, missed_txs);
       BOOST_FOREACH(const auto& tx, txs)
       {
         tx_fee_amount += get_tx_fee(tx);
       }
-      
+
       emission_amount += coinbase_amount - tx_fee_amount;
       total_fee_amount += tx_fee_amount;
       coinbase_amount = 0;
@@ -771,6 +774,21 @@ namespace cryptonote
   bool core::get_tx_outputs_gindexs(const crypto::hash& tx_id, std::vector<uint64_t>& indexs) const
   {
     return m_blockchain_storage.get_tx_outputs_gindexs(tx_id, indexs);
+  }
+  //-----------------------------------------------------------------------------------------------
+  bool core::get_tx_outputs_gindexs_string(const crypto::hash& tx_id, std::string& indexs) const
+  {
+      std::ostringstream os;
+      std::vector<uint64_t> v_indexs;
+      m_blockchain_storage.get_tx_outputs_gindexs(tx_id, v_indexs);
+      for (size_t i = 0; i < v_indexs.size(); ++i) {
+        if (i > 0) {
+          os << ";";
+        }
+        os << v_indexs[i];
+      }
+      indexs = os.str();
+      return true;
   }
   //-----------------------------------------------------------------------------------------------
   void core::pause_mine()
@@ -915,11 +933,11 @@ namespace cryptonote
     m_mempool.get_transactions(txs);
     return true;
   }
-  //-----------------------------------------------------------------------------------------------  
+  //-----------------------------------------------------------------------------------------------
   bool core::get_pool_transaction(const crypto::hash &id, transaction& tx) const
   {
     return m_mempool.get_transaction(id, tx);
-  }  
+  }
   //-----------------------------------------------------------------------------------------------
   bool core::get_pool_transactions_and_spent_keys_info(std::vector<tx_info>& tx_infos, std::vector<spent_key_image_info>& key_image_infos) const
   {

@@ -141,7 +141,7 @@ namespace cryptonote
       * @note see Blockchain::cleanup_handle_incoming_blocks
       */
      bool cleanup_handle_incoming_blocks(bool force_sync = false);
-     	     	
+
      /**
       * @brief check the size of a block against the current maximum
       *
@@ -379,13 +379,13 @@ namespace cryptonote
       * @note see tx_memory_pool::get_transactions
       */
      bool get_pool_transactions(std::list<transaction>& txs) const;
-     
+
      /**
       * @copydoc tx_memory_pool::get_transaction
       *
       * @note see tx_memory_pool::get_transaction
       */
-     bool get_pool_transaction(const crypto::hash& id, transaction& tx) const;     
+     bool get_pool_transaction(const crypto::hash& id, transaction& tx) const;
 
      /**
       * @copydoc tx_memory_pool::get_pool_transactions_and_spent_keys_info
@@ -451,6 +451,13 @@ namespace cryptonote
       * @note see Blockchain::get_tx_outputs_gindexs
       */
      bool get_tx_outputs_gindexs(const crypto::hash& tx_id, std::vector<uint64_t>& indexs) const;
+
+     /**
+      * @copydoc Blockchain::get_tx_outputs_gindexs_string
+      *
+      * @note see Blockchain::get_tx_outputs_gindexs_string
+      */
+     bool get_tx_outputs_gindexs_string(const crypto::hash& tx_id, std::string& indexs) const;
 
      /**
       * @copydoc Blockchain::get_tail_id
@@ -618,12 +625,12 @@ namespace cryptonote
       * @return the number of blocks to sync in one go
       */
      std::pair<uint64_t, uint64_t> get_coinbase_tx_sum(const uint64_t start_offset, const size_t count);
-     
+
      /**
       * @brief get whether we're on testnet or not
       *
       * @return are we on testnet?
-      */     
+      */
      bool get_testnet() const { return m_testnet; };
 
    private:
